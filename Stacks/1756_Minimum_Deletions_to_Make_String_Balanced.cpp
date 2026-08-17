@@ -3,30 +3,20 @@
 // Tags      : String, Dynamic Programming, Stack
 // URL       : https://leetcode.com/problems/minimum-deletions-to-make-string-balanced/
 // Language  : Cpp
-// Date      : 2026-08-17
+// Date      : 2026-08-18
 //
 
 class Solution {
 public:
     int minimumDeletions(string s) {
+        int b = 0;
         int del = 0;
-        stack<char> st;
-        for(char c: s){
-            if(st.empty()){
-                st.push(c);
+        for(char c : s) {
+            if(c == 'b') {
+                b++;
             }
-            else if(st.top()=='a' && c=='a'){
-                st.push(c);
-            }
-            else if(st.top()=='a' && c=='b'){
-                st.push(c);
-            }
-            else if(st.top()=='b' && c=='b'){
-                st.push(c);
-            }
-            else if(st.top()=='b' && c=='a'){
-                del++;
-                st.pop();
+            else {
+                del = min(del + 1, b);
             }
         }
         return del;
