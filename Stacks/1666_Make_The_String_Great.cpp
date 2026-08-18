@@ -9,34 +9,15 @@
 class Solution {
 public:
     string makeGood(string s) {
-        stack<char> st;
+        string ans;
         for(char c: s){
-            if(st.empty()){
-                st.push(c);
+            if(!ans.empty() && (ans.back()+32==c || ans.back()-32==c)){
+                ans.pop_back();
             }
             else{
-                char prev = st.top();
-                if(islower(c)){
-                    if(c-'a'==prev-'A'){
-                        st.pop();
-                        continue;
-                    }
-                }
-                else{
-                    if(c-'A'==prev-'a'){
-                        st.pop();
-                        continue;
-                    }
-                }
-                st.push(c);
+                ans.push_back(c);
             }
         }
-        string ans;
-        while(!st.empty()){
-            ans += st.top();
-            st.pop();
-        }
-        reverse(ans.begin(),ans.end());
         return ans;
     }
 };
