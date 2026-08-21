@@ -28,7 +28,7 @@ public:
         if(nums[i]<=t){
             Take = count(nums,dp,t-nums[i],i-1);
         }
-        return Take+NotTake;
+        return dp[i][t] = Take+NotTake;
     }
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
