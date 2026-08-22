@@ -8,23 +8,19 @@
 
 class Solution {
 public:
-    int len(vector<int>& nums,vector<vector<int>>& dp,int i, int prev){
-        if(i==nums.size()){
-            return 0;
-        }
-        if(dp[i][prev+1]!=-1){
-            return dp[i][prev+1];
-        }
-        int notTake = len(nums,dp,i+1,prev);
-        int take = 0;
-        if(prev==-1 || nums[prev]<nums[i]){
-            take = len(nums,dp,i+1,i)+1;
-        }
-        return dp[i][prev+1] = max(notTake,take);
-    }
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>> dp(n,vector<int>(n+1,-1));
-        return len(nums,dp,0,-1);
+        vector<int> temp;
+        temp.push_back(nums[0]);
+        for(int i=1;i<n;i++){
+            if(nums[i]>temp.back()){
+                temp.push_back(nums[i]);
+            }
+            else{
+                int ind = lower_bound(temp.begin(),temp.end(),nums[i]) - temp.begin();
+                temp[ind] = nums[i];
+            }
+        }
+        return temp.size();
     }
 };
