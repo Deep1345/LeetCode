@@ -44,8 +44,8 @@ public:
             st.insert(it);
         }
         vector<TreeNode*> ans;
-        del(root,st,ans);
-        if(st.find(root->val)==st.end()){
+        root = del(root,st,ans);
+        if(root){
             ans.push_back(root);
         }
         return ans;
