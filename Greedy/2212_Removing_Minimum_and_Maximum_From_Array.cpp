@@ -27,6 +27,6 @@ public:
         int left = max(min_index, max_index) + 1;
         int right = n - min(min_index, max_index);
         int both = min(min_index, max_index) + 1 + n - max(min_index, max_index);
-        return min({left, right, both});
+        return min(left,min(right,both));
     }
 };
