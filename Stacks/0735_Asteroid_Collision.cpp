@@ -3,35 +3,39 @@
 // Tags      : Array, Stack, Simulation
 // URL       : https://leetcode.com/problems/asteroid-collision/
 // Language  : Cpp
-// Date      : 2026-08-17
+// Date      : 2026-09-10
 //
 
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& asteroids) {
+        int n = asteroids.size();
         stack<int> st;
-        for(auto x: asteroids){
-            if(x>0){
-                st.push(x);
+        for(auto it: asteroids){
+            if(it>0){
+                st.push(it);
                 continue;
             }
-            while(!st.empty() && st.top()>0 && st.top() < abs(x)){
-                st.pop();
-            }
-            if(st.empty() || st.top()<0){
-                st.push(x);
-            }
-            else if(!st.empty() && st.top()==abs(x)){
-                st.pop();
+            else{
+                while(!st.empty() && st.top()>0 && st.top()<abs(it)){
+                    st.pop();
+                }
+                if(st.empty() || st.top()<0){
+                    st.push(it);
+                }
+                else{
+                    if(st.top()==abs(it)){
+                        st.pop();
+                    }
+                }
             }
         }
-        vector<int> ans(st.size());
-        int i = st.size()-1;
+        vector<int> ans;
         while(!st.empty()){
-            ans[i] = st.top();
+            ans.push_back(st.top());
             st.pop();
-            i--;
         }
+        reverse(ans.begin(),ans.end());
         return ans;
     }
 };
