@@ -3,24 +3,32 @@
 // Tags      : Stack, Design, Monotonic Stack, Data Stream
 // URL       : https://leetcode.com/problems/online-stock-span/
 // Language  : Cpp
-// Date      : 2026-08-17
+// Date      : 2026-09-11
 //
 
 class StockSpanner {
 public:
     stack<pair<int,int>> st;
-    StockSpanner() { 
+    StockSpanner() {
+    
     }
     int next(int price) {
-        int span = 1;
-        while(!st.empty() && st.top().first<=price){
-            span += st.top().second;
-            st.pop();
+        if(st.empty()){
+            st.push({price,1});
+            return 1;
         }
-        st.push({price,span});
-        return span;
+        else{
+            int span = 1;
+            while(!st.empty() && st.top().first<=price){
+                span += st.top().second;
+                st.pop();
+            }
+            st.push({price,span});
+            return span;
+        }
     }
 };
+
 /**
  * Your StockSpanner object will be instantiated and called as such:
  * StockSpanner* obj = new StockSpanner();
