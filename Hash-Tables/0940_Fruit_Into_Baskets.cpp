@@ -3,30 +3,27 @@
 // Tags      : Array, Hash Table, Sliding Window
 // URL       : https://leetcode.com/problems/fruit-into-baskets/
 // Language  : Cpp
-// Date      : 2026-08-16
+// Date      : 2026-09-13
 //
 
 class Solution {
 public:
-    int totalFruit(vector<int>& nums) {
-        int n = nums.size();
-        unordered_map<int,int> mpp;
-        int i = 0;
-        int j = 0;
-        int ans = 0;
-        while(j<n){
-            mpp[nums[j]]++;
-            while(mpp.size()>2){
-                mpp[nums[i]]--;
-                if(mpp[nums[i]]==0){
-                    mpp.erase(nums[i]);
+    int totalFruit(vector<int>& fruits) {
+        int n = fruits.size();
+        int l = 0;
+        unordered_map<int,int> freq;
+        int maxFruits = 0;
+        for(int r=0;r<n;r++){
+            freq[fruits[r]]++;
+            if(freq.size()>2){
+                freq[fruits[l]]--;
+                if(freq[fruits[l]]==0){
+                    freq.erase(fruits[l]);
                 }
-                i++;
+                l++;
             }
-            ans = max(ans, j-i+1);
-            j++;
+            maxFruits = max(maxFruits,r-l+1);
         }
-        return ans;
-
+        return maxFruits;
     }
 };
