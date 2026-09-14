@@ -3,7 +3,7 @@
 // Tags      : Hash Table, String, Sliding Window
 // URL       : https://leetcode.com/problems/minimum-window-substring/
 // Language  : Cpp
-// Date      : 2026-08-14
+// Date      : 2026-09-14
 //
 
 class Solution {
@@ -12,39 +12,32 @@ public:
         int n = s.size();
         int m = t.size();
         vector<int> hash(256,0);
-        if(m>n){
-            return "";
-        }
         for(auto it: t){
             hash[it]++;
         }
-        int cnt = m;
-        int start_i = 0;
-        int minW = INT_MAX;
-        int i = 0;
-        int j = 0;
-        while(j<n){
-            if(hash[s[j]]>0){
-                cnt--;
-            }
-            hash[s[j]]--;
-            while(cnt==0){
-                int win = j-i+1;
-                if(minW>win){
-                    minW = win;
-                    start_i = i;
+        int l = 0;
+        int s_index = 0;
+        int len = 1e9;
+        int cnt = 0;
+        for(int r=0;r<n;r++){
+            if(hash[s[r]] > 0)
+                cnt++;
+            hash[s[r]]--;
+            while(cnt==m){
+                if(r-l+1 < len){
+                    len = r-l+1;
+                    s_index = l;
                 }
-                hash[s[i]]++;
-                if(hash[s[i]]>0){
-                    cnt++;
+                hash[s[l]]++;
+                if(hash[s[l]]>0){
+                    cnt--;
                 }
-                i++;
+                l++;
             }
-            j++;
         }
-        if(minW==INT_MAX){
+        if(len == 1e9){
             return "";
         }
-        return s.substr(start_i,minW);
+        return s.substr(s_index,len);
     }
 };
